@@ -3,218 +3,173 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#071524">
 <title>STI Detective: Final Boss — Final Desktop</title>
 <style>
-:root{
-  --bg:#071524;--bg2:#0c2e52;--paper:#fff9ea;--white:#fff;--ink:#111820;
-  --navy:#073b70;--yellow:#ffc51b;--pink:#ff4f87;--red:#e54a4a;
-  --green:#2fb878;--purple:#7558df;--cyan:#97d3e7;--orange:#ff9f50;--black:#0b0b0b;--muted:#6a7480;
-}
-*{box-sizing:border-box}
-html,body{margin:0;min-height:100%;background:var(--bg)}
-body{
-  min-height:100vh;display:flex;align-items:center;justify-content:center;padding:16px;
-  color:var(--ink);font-family:"Noto Sans Thai","Leelawadee UI",Tahoma,Arial,sans-serif;
-  background:
-   radial-gradient(circle at 15% 17%,rgba(255,255,255,.10) 0 2px,transparent 3px),
-   radial-gradient(circle at 84% 25%,rgba(255,255,255,.07) 0 2px,transparent 3px),
-   linear-gradient(135deg,var(--bg),var(--bg2) 55%,var(--bg));
-}
-button,input{font:inherit}
-button{cursor:pointer;user-select:none}
-.app{width:min(1180px,100%)}
-.screen{
-  display:none;min-height:660px;background:var(--paper);border:6px solid var(--black);border-radius:26px;
-  box-shadow:14px 14px 0 var(--black);overflow:hidden;
-}
-.screen.active{display:block}
-.topbar{
-  min-height:66px;padding:10px 18px;background:var(--cyan);border-bottom:5px solid var(--black);
-  display:grid;grid-template-columns:140px 1fr 140px;align-items:center;gap:12px;font-weight:1000;
-}
-.top-title{text-align:center;letter-spacing:.4px}
-.dots{display:flex;gap:10px}.dot{width:20px;height:20px;border:4px solid #111;border-radius:50%}
-.dot:nth-child(1){background:#ff9b67}.dot:nth-child(2){background:#fff7d9}.dot:nth-child(3){background:#72c7c4}
-.top-actions{display:flex;justify-content:flex-end;gap:8px}
-.icon-btn{min-width:42px;height:42px;border:3px solid #111;border-radius:10px;background:#fff;box-shadow:3px 3px 0 #111;font-weight:1000}
-.icon-btn:active{transform:translate(1px,1px);box-shadow:2px 2px 0 #111}
-.content{padding:18px 38px 22px}
-h1{font-size:64px;line-height:1;margin:10px 0;color:var(--navy)}
-h2{font-size:38px;line-height:1.15;margin:0 0 16px;color:var(--navy)}
-.pixel{font-weight:1000;letter-spacing:1px;text-transform:uppercase;text-shadow:3px 3px 0 var(--yellow)}
-.subtitle{font-size:18px;line-height:1.65;color:#2b4054}
-.badge{display:inline-flex;border:3px solid #111;border-radius:10px;background:var(--navy);color:#fff;padding:7px 11px;font-size:13px;font-weight:1000}
-.btn{
-  min-height:50px;border:4px solid #111;border-radius:13px;padding:11px 18px;background:var(--yellow);color:#111;
-  box-shadow:4px 4px 0 #111;font-size:16px;font-weight:1000;
-}
-.btn:active:not(:disabled){transform:translate(2px,2px);box-shadow:2px 2px 0 #111}
-.btn:disabled{opacity:.42;cursor:not-allowed}.btn.pink{background:var(--pink);color:#fff}.btn.green{background:var(--green);color:#fff}
-.btn.red{background:var(--red);color:#fff}.btn.white{background:#fff}.btn.purple{background:var(--purple);color:#fff}
-.start-grid{display:grid;grid-template-columns:1.18fr .82fr;gap:30px;align-items:center;min-height:555px}
-.hero-card,.card{background:#fff;border:5px solid #111;border-radius:20px;box-shadow:7px 7px 0 #111}
-.hero-card{padding:24px}.hero-icon{font-size:112px;text-align:center;line-height:1.1}
-.tags{display:flex;gap:9px;flex-wrap:wrap;margin:18px 0 22px}.tag{border:3px solid #111;border-radius:999px;background:#fff;padding:7px 10px;font-size:13px;font-weight:1000}
-.namebox{max-width:520px;margin:18px 0}.namebox label{display:block;font-weight:1000;margin-bottom:7px}
-.namebox input{width:100%;height:52px;border:4px solid #111;border-radius:12px;background:#fff;padding:10px 13px;font-size:17px}
-.start-actions{display:flex;gap:10px;flex-wrap:wrap}
-.rules{display:grid;gap:12px;margin-top:18px}.rule{display:grid;grid-template-columns:30px 1fr;gap:8px;font-size:15px;line-height:1.5}
-.hud{display:grid;grid-template-columns:1fr 126px 126px 126px;gap:10px;margin-bottom:12px}
-.hud-card{background:#fff;border:4px solid #111;border-radius:12px;padding:9px 11px;font-size:13px;font-weight:1000;text-align:center}
-.hud-card.wide{text-align:left}.progress{height:18px;border:3px solid #111;border-radius:999px;background:#fff;overflow:hidden;margin-top:6px}.progress>div{height:100%;width:0;background:linear-gradient(90deg,var(--pink),var(--yellow));transition:width .25s}
-.card{padding:16px}.qhead{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}.qicon{font-size:52px;line-height:1}.category{margin-top:8px;color:var(--pink);font-size:13px;font-weight:1000}.case-title{font-size:26px;color:var(--navy);font-weight:1000;margin:8px 0 0}
-.clues{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:11px 0}.clue{min-height:62px;border:3px dashed #7d8791;border-radius:11px;background:#f8f9fa;padding:8px 10px;font-size:13px;line-height:1.4}.clue.locked{filter:blur(4px);opacity:.5;user-select:none}
-.prompt{font-size:18px;line-height:1.4;font-weight:1000;margin:10px 0}.options{display:grid;grid-template-columns:1fr 1fr;gap:11px}
-.option{min-height:54px;border:4px solid #111;border-radius:13px;background:#fff;padding:9px 12px;text-align:left;box-shadow:3px 3px 0 #111;font-size:15px;font-weight:1000;line-height:1.4}
-.option:hover:not(:disabled){background:#fff4ba}.option.correct{background:#bdf2d3}.option.wrong{background:#ffd1d1}.option:disabled{cursor:default}
-.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}.feedback{display:none;margin-top:8px;border:3px solid #111;border-radius:10px;padding:7px 10px;font-size:12px;font-weight:900;line-height:1.35}.feedback.show{display:block}.feedback.good{background:#c8f5d9}.feedback.bad{background:#ffd5d5}
-.inventory{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}.token{border:3px solid #111;border-radius:9px;background:#fff;padding:6px 9px;font-size:12px;font-weight:1000}
-.transition{text-align:center;max-width:760px;margin:20px auto}.big-icon{font-size:126px;line-height:1;margin:12px 0}.warning{font-size:22px;color:#c93535;font-weight:1000}
-.boss-grid{display:grid;grid-template-columns:310px 1fr;gap:22px;align-items:start}.boss-panel{background:#1a0e2b;color:#fff;border:5px solid #111;border-radius:20px;padding:18px;box-shadow:7px 7px 0 #111}.boss-emoji{font-size:116px;line-height:1;text-align:center;transition:.18s}.boss-emoji.hit{transform:translateX(8px) rotate(4deg) scale(.96)}
-.stat-label{display:flex;justify-content:space-between;gap:10px;margin:9px 0 5px;font-size:13px;font-weight:1000}.hpbar{height:25px;border:4px solid #111;border-radius:7px;background:#fff;overflow:hidden}.hp{height:100%;transition:width .3s}.hp.boss{background:var(--red)}.hp.team{background:var(--green)}
-.power-title{margin-top:17px;font-size:13px;font-weight:1000}.powerups{display:grid;gap:8px;margin-top:8px}.power{min-height:48px;border:3px solid #111;border-radius:10px;background:#fff;color:#111;padding:8px 10px;text-align:left;font-size:12px;font-weight:1000}.power.active{background:#fff0a8}.power:disabled{opacity:.38;cursor:not-allowed}
-.timer{width:72px;height:72px;border:5px solid #111;border-radius:50%;background:var(--yellow);display:grid;place-items:center;font-size:27px;font-weight:1000}.timer.danger{background:#ff9090}.battle-log{min-height:58px;margin-top:13px;font-size:14px;font-weight:1000;line-height:1.5}.ko{color:var(--red);font-size:21px;font-weight:1000}
-.end{text-align:center;max-width:820px;margin:12px auto}.end-icon{font-size:112px;line-height:1}.score-big{font-size:62px;color:var(--navy);font-weight:1000}.summary{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}.summary-card{background:#fff;border:4px solid #111;border-radius:13px;padding:13px;font-weight:1000}.end-actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:18px}
-.board-head{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:15px}.board-wrap{background:#fff;border:5px solid #111;border-radius:20px;padding:18px;box-shadow:7px 7px 0 #111}.rank-scroll{overflow:auto;max-height:470px}.rank-table{width:100%;border-collapse:separate;border-spacing:0 8px}.rank-table th{text-align:left;color:var(--muted);font-size:12px;padding:0 9px}.rank-table td{background:#fff;border-top:3px solid #111;border-bottom:3px solid #111;padding:10px 9px;font-size:14px;font-weight:900}.rank-table td:first-child{border-left:3px solid #111;border-radius:9px 0 0 9px;text-align:center;width:55px}.rank-table td:last-child{border-right:3px solid #111;border-radius:0 9px 9px 0}.rank-1 td{background:#fff0a6}.rank-2 td{background:#eef2f5}.rank-3 td{background:#ffd8b7}.empty{text-align:center;color:var(--muted);padding:40px 0}.board-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:14px}
-.small{font-size:12px;color:var(--muted);line-height:1.5}
 .toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,20px);z-index:50;background:#111;color:#fff;border:3px solid #fff;border-radius:11px;padding:9px 13px;font-size:13px;font-weight:900;opacity:0;pointer-events:none;transition:.2s}.toast.show{opacity:1;transform:translate(-50%,0)}
 [hidden]{display:none!important}
 @media(max-width:980px){.screen{min-height:680px}.content{padding:24px}.start-grid{grid-template-columns:1fr}.hero-card{display:none}.hud{grid-template-columns:1fr 110px 110px}.hud-card:nth-child(4){display:none}.boss-grid{grid-template-columns:270px 1fr}.options{grid-template-columns:1fr}}
+
+/* Phone layout: one document, two intentionally different presentations. */
+@media(max-width:720px){
+  html{background:var(--bg)}
+  body{
+    display:block;min-height:100vh;min-height:100dvh;padding:0;overflow-x:hidden;
+    background:var(--paper);
+  }
+  .app{width:100%;max-width:none;min-width:0}
+  .screen{
+    width:100%;min-width:0;min-height:100vh;min-height:100dvh;border:0;border-radius:0;
+    box-shadow:none;overflow:hidden;
+  }
+  .topbar{
+    position:relative;min-height:56px;padding:7px 10px;border-bottom-width:4px;
+    grid-template-columns:minmax(0,1fr) auto;gap:8px;
+    padding-top:max(7px,env(safe-area-inset-top));
+    padding-left:max(10px,env(safe-area-inset-left));
+    padding-right:max(10px,env(safe-area-inset-right));
+  }
+  .dots{display:none}
+  .top-title{
+    min-width:0;text-align:left;font-size:12px;line-height:1.2;letter-spacing:0;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  }
+  .top-actions{gap:6px}
+  .icon-btn{
+    width:40px;min-width:40px;height:40px;padding:0;border-width:3px;border-radius:8px;
+    box-shadow:2px 2px 0 #111;
+  }
+  .content{
+    padding:14px 12px calc(22px + env(safe-area-inset-bottom));
+    padding-left:max(12px,env(safe-area-inset-left));
+    padding-right:max(12px,env(safe-area-inset-right));
+  }
+  h1{font-size:40px;line-height:1.05;margin:8px 0}
+  h2{font-size:27px;line-height:1.15;margin-bottom:12px}
+  .pixel{letter-spacing:0;text-shadow:2px 2px 0 var(--yellow)}
+  .subtitle{font-size:15px;line-height:1.55}
+  .badge{max-width:100%;padding:5px 8px;border-width:3px;border-radius:8px;font-size:11px}
+  .btn{
+    min-height:48px;padding:9px 12px;border-width:3px;border-radius:10px;
+    box-shadow:3px 3px 0 #111;font-size:14px;
+  }
+  .start-grid{display:block;min-height:0}
+  .hero-card{display:none}
+  .tags{gap:6px;margin:12px 0 15px}
+  .tag{padding:5px 7px;border-width:2px;font-size:11px}
+  .namebox{max-width:none;margin:15px 0}
+  .namebox label{margin-bottom:6px;font-size:14px}
+  .namebox input{height:48px;padding:9px 11px;border-width:3px;border-radius:9px;font-size:16px}
+  .start-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+  .start-actions .btn{width:100%;min-width:0;padding-inline:7px}
+
+  .hud{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-bottom:9px}
+  .hud-card{min-width:0;padding:7px 4px;border-width:3px;border-radius:9px;font-size:11px}
+  .hud-card.wide{grid-column:1/-1;text-align:left}
+  .hud-card:nth-child(4){display:block}
+  .progress{height:14px;margin-top:5px;border-width:2px}
+
+  .card,.boss-panel,.board-wrap{min-width:0;border-width:3px;border-radius:12px;box-shadow:3px 3px 0 #111}
+  .card{padding:12px}
+  .qhead{gap:9px}
+  .qicon{font-size:40px}
+  .category{margin-top:5px;font-size:11px}
+  .case-title{margin-top:7px;font-size:21px;line-height:1.25}
+  .clues{grid-template-columns:1fr;gap:7px;margin:9px 0}
+  .clue{min-height:0;padding:7px 9px;border-width:2px;border-radius:8px;font-size:12px}
+  .prompt{margin:9px 0;font-size:16px;line-height:1.45}
+  .options{grid-template-columns:1fr;gap:8px}
+  .option{
+    min-height:52px;padding:9px 10px;border-width:3px;border-radius:10px;
+    box-shadow:2px 2px 0 #111;font-size:14px;line-height:1.4;
+  }
+  .actions{display:grid;grid-template-columns:1fr;gap:8px;margin-top:10px}
+  .actions .btn{width:100%}
+  .feedback{margin-top:8px;padding:8px 9px;border-width:2px;font-size:13px}
+  .inventory{gap:6px}
+  .token{padding:5px 7px;border-width:2px;font-size:11px}
+
+  .transition{margin:14px auto}
+  .transition h1{font-size:36px}
+  .big-icon{font-size:82px;margin:10px 0}
+  .warning{font-size:16px;line-height:1.35}
+
+  .boss-grid{grid-template-columns:minmax(0,1fr);gap:12px}
+  .boss-panel{
+    display:grid;grid-template-columns:74px minmax(0,1fr);
+    grid-template-rows:auto auto 18px auto 18px auto auto;gap:4px 10px;
+    padding:10px 11px 11px;
+  }
+  .boss-panel>.warning{grid-column:1/-1;grid-row:1;text-align:center}
+  .boss-panel>.boss-emoji{grid-column:1;grid-row:2/6;align-self:center}
+  .boss-panel>.stat-label:nth-child(3){grid-column:2;grid-row:2}
+  .boss-panel>.hpbar:nth-child(4){grid-column:2;grid-row:3}
+  .boss-panel>.stat-label:nth-child(5){grid-column:2;grid-row:4}
+  .boss-panel>.hpbar:nth-child(6){grid-column:2;grid-row:5}
+  .boss-panel>.power-title{grid-column:1/-1;grid-row:6}
+  .boss-panel>.powerups{grid-column:1/-1;grid-row:7}
+  .boss-emoji{font-size:62px}
+  .stat-label{min-width:0;margin:0;font-size:11px}
+  .hpbar{height:18px;border-width:3px;border-radius:6px}
+  .power-title{margin-top:5px;font-size:11px}
+  .powerups{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin-top:3px}
+  .power{min-height:52px;padding:7px 8px;border-width:2px;border-radius:8px;font-size:11px;line-height:1.3}
+  .timer{width:58px;height:58px;border-width:4px;font-size:22px;flex:0 0 58px}
+  #bossQuestion{font-size:18px!important}
+  .battle-log{min-height:44px;margin-top:10px;font-size:13px;line-height:1.45}
+  .ko{font-size:17px}
+
+  .end{margin:8px auto}
+  .end-icon{font-size:76px}
+  .end h1{font-size:34px}
+  .score-big{font-size:44px}
+  .summary{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin:14px 0}
+  .summary-card{min-width:0;padding:9px 4px;border-width:3px;border-radius:9px;font-size:12px}
+  .end-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+
+  .board-head{align-items:flex-start;gap:8px;margin-bottom:10px}
+  .board-head h2{font-size:23px;margin-bottom:0}
+  .board-wrap{padding:8px}
+  .rank-scroll{width:100%;max-height:none;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .rank-table{min-width:660px}
+  .rank-table th{font-size:11px;padding-inline:7px}
+  .rank-table td{padding:8px 7px;font-size:12px}
+  .board-actions{margin-top:10px}
+  .board-actions .btn{width:100%}
+  .empty{padding:30px 0}
+  .toast{bottom:12px;max-width:calc(100% - 24px);text-align:center}
+
+  .card,.clue,.prompt,.option,.feedback,.battle-log,.token,.power,.summary-card{
+    overflow-wrap:anywhere;word-break:normal;
+  }
+  button,input{max-width:100%}
+}
+
+@media(max-width:390px){
+  .content{padding-top:11px;padding-left:max(9px,env(safe-area-inset-left));padding-right:max(9px,env(safe-area-inset-right))}
+  h1{font-size:34px}.transition h1{font-size:32px}h2{font-size:23px}
+  .top-title{font-size:11px}
+  .hud-card{font-size:10px}
+  .summary-card{padding-inline:2px;font-size:11px}
+}
+
+@media(max-width:360px){
+  .start-actions,.end-actions{grid-template-columns:1fr}
+  .boss-panel{grid-template-columns:62px minmax(0,1fr);padding-inline:8px}
+  .boss-emoji{font-size:52px}
+  .powerups{grid-template-columns:1fr}
+}
+
+@media(hover:none) and (pointer:coarse){
+  .option:hover:not(:disabled){background:#fff}
+  .option.correct:hover{background:#bdf2d3}
+  .option.wrong:hover{background:#ffd1d1}
+}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important}
+}
 </style>
 </head>
 <body>
-<div class="app">
-
-<section id="start" class="screen active">
- <div class="topbar"><div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div><div class="top-title">STI DETECTIVE — FINAL DESKTOP</div><div class="top-actions"><button type="button" class="icon-btn js-board" title="Leaderboard">🏆</button><button type="button" class="icon-btn js-full" title="Fullscreen">⛶</button></div></div>
- <div class="content">
-  <div class="start-grid">
-   <div>
-    <span class="badge">15 QUESTIONS • 2 PHASES</span>
-    <h1 class="pixel">STI DETECTIVE</h1><h2>FINAL BOSS 👾</h2>
-    <p class="subtitle">ไขคดี 8 ข้อเพื่อสะสม Evidence จากนั้นเข้าสู่ Final Boss อีก 7 ข้อ พร้อมระบบคะแนนและ Leaderboard ในเครื่อง</p>
-    <div class="tags"><span class="tag">🕵️ 8 CASES</span><span class="tag">👾 7 BOSS Qs</span><span class="tag">🧩 POWER-UP</span><span class="tag">🏆 SCOREBOARD</span></div>
-    <div class="namebox"><label for="playerName">ชื่อผู้เล่น / ชื่อทีม</label><input id="playerName" maxlength="28" placeholder="เช่น Team Safe" autocomplete="off"></div>
-    <div class="start-actions"><button id="startBtn" type="button" class="btn pink">▶ GAME START</button><button type="button" class="btn white js-board">🏆 LEADERBOARD</button></div>
-   </div>
-   <div class="hero-card">
-    <div class="hero-icon">🕵️‍♀️🦠</div><h2 style="font-size:28px;text-align:center">HOW TO PLAY</h2>
-    <div class="rules"><div class="rule"><b>🔍</b><span><b>Detective:</b> เปิด Clue น้อย ได้คะแนนมาก</span></div><div class="rule"><b>🧩</b><span><b>Evidence:</b> ตอบถูกเพื่อปลด Power-up</span></div><div class="rule"><b>👾</b><span><b>Boss:</b> ตอบถูกเพื่อลด HP</span></div><div class="rule"><b>💀</b><span><b>สำคัญ:</b> Team HP เหลือ 0 = แพ้และจบทันที</span></div></div>
-   </div>
-  </div>
- </div>
-</section>
-
-<section id="detective" class="screen">
- <div class="topbar"><div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div><div class="top-title">🕵️ STI DETECTIVE — CASE FILES</div><div class="top-actions"><button type="button" class="icon-btn js-board">🏆</button><button type="button" class="icon-btn js-full">⛶</button></div></div>
- <div class="content">
-  <div class="hud"><div class="hud-card wide">TOTAL PROGRESS <span id="progressText">1/15</span><div class="progress"><div id="progressBar"></div></div></div><div class="hud-card">⭐ <span id="score">0</span></div><div class="hud-card">CASE <span id="caseNo">1</span>/8</div><div class="hud-card">CLUE <span id="clueNo">1</span>/3</div></div>
-  <div class="card">
-   <div class="qhead"><div><span id="caseCode" class="badge">CASE #01</span><div id="caseCategory" class="category"></div></div><div id="caseIcon" class="qicon">🧫</div></div>
-   <div id="caseTitle" class="case-title"></div><div id="clues" class="clues"></div><div id="casePrompt" class="prompt"></div><div id="caseOptions" class="options"></div>
-   <div class="actions"><button id="clueBtn" type="button" class="btn white">🔍 OPEN NEXT CLUE</button><button id="nextCaseBtn" type="button" class="btn green" hidden>NEXT CASE ➜</button></div><div id="caseFeedback" class="feedback"></div>
-  </div>
-  <div id="inventory" hidden></div>
- </div>
-</section>
-
-<section id="bossIntro" class="screen">
- <div class="topbar" style="background:var(--orange)"><div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div><div class="top-title">PHASE 2 — FINAL BOSS</div><div class="top-actions"><button type="button" class="icon-btn js-full">⛶</button></div></div>
- <div class="content"><div class="transition"><div class="warning">⚠ UNKNOWN PATHOGEN DETECTED ⚠</div><div class="big-icon">👾</div><h1 class="pixel" style="color:#7a174e">FINAL BOSS</h1><h2>STI OVERLORD</h2><p class="subtitle">ใช้ Evidence เป็น Power-up ช่วยตอบคำถามให้ครบ หาก Team HP เหลือ 0 เกมจะตัดแพ้ทันที</p><div id="introInventory" class="inventory" style="justify-content:center;margin:18px 0 24px"></div><button id="enterBossBtn" type="button" class="btn red">⚔️ ENTER BATTLE</button></div></div>
-</section>
-
-<section id="boss" class="screen">
- <div class="topbar" style="background:#ff7777"><div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div><div class="top-title">👾 FINAL BOSS</div><div class="top-actions"><button type="button" class="icon-btn js-board">🏆</button><button type="button" class="icon-btn js-full">⛶</button></div></div>
- <div class="content">
-  <div class="boss-grid">
-   <div class="boss-panel"><div class="warning" style="color:#ffd64a">⚠ STI OVERLORD ⚠</div><div id="bossEmoji" class="boss-emoji">👾</div><div class="stat-label"><span>BOSS HP</span><span id="bossHpText">1190/1190</span></div><div class="hpbar"><div id="bossHp" class="hp boss" style="width:100%"></div></div><div class="stat-label"><span>TEAM HP</span><span id="playerHpText">100/100</span></div><div class="hpbar"><div id="playerHp" class="hp team" style="width:100%"></div></div><div class="power-title">🧩 POWER-UPS</div><div id="powerups" class="powerups"></div></div>
-   <div class="card"><div class="qhead"><div><span class="badge">QUESTION <span id="bossQNo">9</span>/15</span><div id="bossCategory" class="category"></div></div><div id="timer" class="timer">25</div></div><div id="bossQuestion" class="prompt" style="font-size:22px"></div><div id="bossOptions" class="options"></div><div id="battleLog" class="battle-log"></div><div class="actions"><button id="nextBossBtn" type="button" class="btn green" hidden>NEXT ATTACK ➜</button></div></div>
-  </div>
- </div>
-</section>
-
-<section id="end" class="screen">
- <div class="topbar" style="background:#9ee0b7"><div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div><div class="top-title">MISSION REPORT</div><div class="top-actions"><button type="button" class="icon-btn js-board">🏆</button><button type="button" class="icon-btn js-full">⛶</button></div></div>
- <div class="content"><div class="end"><div id="endIcon" class="end-icon">🏆</div><h1 id="endTitle" class="pixel">MISSION COMPLETE</h1><div class="score-big">⭐ <span id="finalScore">0</span></div><p id="endText" class="subtitle"></p><div class="summary"><div class="summary-card">🕵️ Detective<br><span id="dSummary">0/8</span></div><div class="summary-card">👾 Boss<br><span id="bSummary">0/7</span></div><div class="summary-card">❤️ Team HP<br><span id="hpSummary">0/100</span></div></div><div class="end-actions"><button type="button" class="btn white js-board">🏆 LEADERBOARD</button><button id="playAgainBtn" type="button" class="btn">↻ PLAY AGAIN</button></div></div></div>
-</section>
-
-<section id="leaderboard" class="screen">
- <div class="topbar" style="background:#ffd65a"><div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div><div class="top-title">🏆 LEADERBOARD</div><div class="top-actions"><button id="closeBoardBtn" type="button" class="icon-btn">←</button><button type="button" class="icon-btn js-full">⛶</button></div></div>
- <div class="content"><div class="board-head"><div><span class="badge">SCOREBOARD</span><h2 style="margin-top:9px">คะแนนผู้เล่นในเครื่องนี้</h2></div><span class="tag"><span id="playerCount">0</span> PLAYERS</span></div><div class="board-wrap"><div class="rank-scroll"><table class="rank-table"><thead><tr><th>#</th><th>PLAYER</th><th>SCORE</th><th>DET.</th><th>BOSS</th><th>HP</th><th>STATUS</th></tr></thead><tbody id="leaderboardBody"></tbody></table><div id="emptyBoard" class="empty">ยังไม่มีคะแนน</div></div><div class="board-actions"><button id="clearBoardBtn" type="button" class="btn red">🗑 CLEAR SCOREBOARD</button></div></div></div>
-</section>
-
-</div>
-<div id="toast" class="toast"></div>
-<script>
-(function(){
-"use strict";
-var detectiveCases=[
- {category:"DISEASE ID",icon:"🧫",title:"PATIENT A",clues:["มีหนองหรือมูกใสไหลออกจากอวัยวะเพศ","มีอาการปัสสาวะแสบขัด","ในสไลด์จัดทั้งสองโรคนี้อยู่ในกลุ่มแบคทีเรีย"],prompt:"คู่โรคใดตรงกับเบาะแสนี้ตามสไลด์?",options:["HIV / HPV","Genital Herpes / HPV","Gonorrhea / Chlamydia","Hepatitis B / C"],answer:2,evidence:"BACTERIA",explain:"Gonorrhea และ Chlamydia อาจทำให้มีหนองหรือมูกใสไหลจากอวัยวะเพศและปัสสาวะแสบขัด"},
- {category:"DISEASE ID",icon:"🧠",title:"PATIENT B",clues:["มีแผลริมแข็งบริเวณอวัยวะเพศ","ต่อมามีผื่นขึ้นตามตัว","หากปล่อยไว้นานอาจทำลายระบบประสาท"],prompt:"โรคใดตรงกับเบาะแสนี้?",options:["HPV","Syphilis","Hepatitis B","Genital Herpes"],answer:1,evidence:"BODY",explain:"ลักษณะนี้ตรงกับ Syphilis ตามสไลด์"},
- {category:"DISEASE ID",icon:"💧",title:"PATIENT C",clues:["มีตุ่มน้ำใสบริเวณอวัยวะเพศ","ตุ่มแตกเป็นแผลและแสบร้อน","มักกลับมาเป็นซ้ำเมื่อร่างกายอ่อนแอ"],prompt:"โรคใดตรงกับเบาะแสนี้?",options:["Gonorrhea","Syphilis","Hepatitis C","Genital Herpes"],answer:3,evidence:"VIRUS",explain:"Genital Herpes มีลักษณะตุ่มน้ำใส แตกเป็นแผลแสบร้อน และอาจกลับมาเป็นซ้ำ"},
- {category:"DISEASE ID",icon:"🧬",title:"PATIENT D",clues:["พบติ่งเนื้อขรุขระบริเวณอวัยวะเพศ","เกิดจากเชื้อไวรัส","บางสายพันธุ์เกี่ยวข้องกับการเปลี่ยนแปลงของเซลล์และมะเร็ง"],prompt:"เชื้อใดตรงกับเบาะแสนี้?",options:["Chlamydia","Syphilis","HPV","Gonorrhea"],answer:2,evidence:"VIRUS",explain:"HPV อาจทำให้เกิดหูดหงอนไก่ และบางสายพันธุ์มีความเสี่ยงต่อการเกิดมะเร็ง"},
- {category:"BODY EFFECT",icon:"🩸",title:"PATIENT E",clues:["เชื้อนี้ทำลายเซลล์เม็ดเลือดขาว CD4","ทำให้ระบบภูมิคุ้มกันบกพร่อง","เพิ่มความเสี่ยงต่อการติดเชื้อฉวยโอกาส"],prompt:"เชื้อใดตรงกับเบาะแสนี้?",options:["HPV","HIV","Hepatitis B","Genital Herpes"],answer:1,evidence:"BODY",explain:"HIV ทำลายเซลล์ CD4 และทำให้ภูมิคุ้มกันบกพร่อง"},
- {category:"RISK CHECK",icon:"⚠️",title:"CASE F — RISK PROFILE",clues:["บุคคลนี้มีคู่นอนหลายคน","มีการเปลี่ยนคู่นอนบ่อย","หัวข้อกลุ่มเสี่ยงในสไลด์ระบุพฤติกรรมนี้ไว้"],prompt:"ข้อสรุปใดตรงกับสไลด์มากที่สุด?",options:["ไม่ใช่กลุ่มเสี่ยงถ้าไม่มีอาการ","ไม่เกี่ยวกับความเสี่ยงของ STI","จัดเป็นกลุ่มเสี่ยงเฉพาะเมื่อมีไข้","จัดอยู่ในกลุ่มเสี่ยงตามสไลด์"],answer:3,evidence:"PROTECTION",explain:"ผู้ที่มีคู่นอนหลายคนหรือเปลี่ยนคู่นอนบ่อยถูกระบุเป็นหนึ่งในกลุ่มเสี่ยง"},
- {category:"TRANSMISSION",icon:"🔬",title:"CASE G — EVIDENCE LAB",clues:["สไลด์กล่าวถึงน้ำอสุจิ","กล่าวถึงน้ำหล่อลื่นช่องคลอดและเลือด","ยังกล่าวถึงการสัมผัสรอยโรคหรือผิวหนังบริเวณที่ติดเชื้อโดยตรง"],prompt:"ข้อใด “ไม่ได้ถูกระบุ” อยู่ในรายการนี้ในสไลด์?",options:["น้ำอสุจิ","เลือด","เหงื่อ","การสัมผัสรอยโรคโดยตรง"],answer:2,evidence:"PROTECTION",explain:"สไลด์ระบุน้ำอสุจิ น้ำหล่อลื่นช่องคลอด เลือด และการสัมผัสรอยโรคโดยตรง แต่ไม่ได้ระบุเหงื่อในรายการดังกล่าว"},
- {category:"TRICK CASE",icon:"🕶️",title:"CASE H — NO SYMPTOMS",clues:["บุคคลนี้ไม่มีอาการแสดง","คำว่า ASYMPTOMATIC ปรากฏในสไลด์","สไลด์เตือนว่ายังสามารถแพร่เชื้อให้ผู้อื่นได้"],prompt:"ข้อสรุปใดถูกต้องตามสไลด์?",options:["ไม่มีอาการ แปลว่าไม่มี STI แน่นอน","ไม่มีอาการ ไม่ได้แปลว่าแพร่เชื้อไม่ได้","ไม่มีอาการ จึงไม่ต้องตรวจคัดกรอง","ไม่มีอาการ แปลว่าเชื้อหายแล้ว"],answer:1,evidence:"PROTECTION",explain:"ผู้ติดเชื้อบางรายไม่มีอาการ แต่ยังสามารถแพร่เชื้อให้ผู้อื่นได้"}
-];
-var bossQuestions=[
- {category:"🛡️ DEFENSE",q:"ตามสไลด์ วิธีใดถูกระบุว่าเป็นวิธีที่มีประสิทธิภาพสูงสุดในการป้องกันทั้ง STI และการตั้งครรภ์?",options:["ตรวจเฉพาะเมื่อมีอาการ","ใช้ถุงยางอนามัยทุกครั้ง","ซื้อยากินป้องกันเอง","หลีกเลี่ยงการตรวจคัดกรอง"],answer:1,explain:"สไลด์ระบุการใช้ถุงยางอนามัยทุกครั้ง"},
- {category:"💉 VACCINE",q:"วัคซีนที่ยกตัวอย่างในสไลด์เพื่อการป้องกัน STI คือคู่ใด?",options:["HIV และ Syphilis","Gonorrhea และ Chlamydia","HPV และไวรัสตับอักเสบบี","Herpes และ Hepatitis C"],answer:2,explain:"สไลด์ยกตัวอย่างวัคซีน HPV และไวรัสตับอักเสบบี"},
- {category:"🔎 SCREENING",q:"ตามสไลด์ ควรตรวจคัดกรองสุขภาพทางเพศในลักษณะใด?",options:["เฉพาะเมื่อมีไข้สูง","เฉพาะหลังได้รับวัคซีน","ไม่ต้องตรวจถ้าไม่มีอาการ","เป็นประจำทุกปี หรือทุกครั้งที่เปลี่ยนคู่นอน"],answer:3,explain:"สไลด์แนะนำตรวจเป็นประจำทุกปี หรือทุกครั้งที่เปลี่ยนคู่นอน"},
- {category:"🩺 TREATMENT",q:"เมื่อสงสัยว่าเป็น STI แนวทางใดตรงกับสไลด์?",options:["ซื้อยาปฏิชีวนะกินเองทันที","รอดูอาการโดยไม่ต้องพบแพทย์เสมอ","ไปพบแพทย์เพื่อรับการวินิจฉัย และไม่ซื้อยากินเอง","ใช้ยาของคนอื่นที่เคยมีอาการคล้ายกัน"],answer:2,explain:"ควรไปพบแพทย์เพื่อรับการวินิจฉัย และไม่ซื้อยากินเอง"},
- {category:"🔁 PING-PONG",q:"เหตุใดสไลด์จึงระบุให้พาคู่นอนมารักษาพร้อมกัน?",options:["เพื่อให้ผลตรวจออกเร็วขึ้น","เพื่อป้องกันการติดเชื้อซ้ำไปมา (Ping-pong infection)","เพื่อให้วัคซีนออกฤทธิ์ดีขึ้น","เพื่อไม่ต้องกินยาตามแพทย์สั่ง"],answer:1,explain:"เพื่อป้องกันการติดเชื้อซ้ำไปมา หรือ Ping-pong infection"},
- {category:"🧫 REPRODUCTIVE SYSTEM",q:"หากเชื้อแบคทีเรีย เช่น หนองใน ลุกลามเข้าไปในมดลูกและปีกมดลูก อาจทำให้เกิดอะไร?",options:["กระดูกหักง่าย","ต้อกระจกทันที","กล้ามเนื้อหัวใจโต","ภาวะอุ้งเชิงกรานอักเสบ (PID) ซึ่งอาจนำไปสู่มีบุตรยากหรือการตั้งครรภ์นอกมดลูก"],answer:3,explain:"สไลด์เชื่อมโยงการลุกลามกับ PID ภาวะมีบุตรยาก และการตั้งครรภ์นอกมดลูก"},
- {category:"🟤 LIVER ATTACK",q:"ไวรัสตับอักเสบบีและซีในสไลด์ถูกเชื่อมโยงกับผลกระทบใด?",options:["ทำลายเฉพาะผิวหนัง","ตับอักเสบเรื้อรัง ตับแข็ง และอาจกลายเป็นมะเร็งตับ","ทำให้กระดูกยาวขึ้น","ทำให้สายตาสั้นโดยตรง"],answer:1,explain:"ไวรัสตับอักเสบบีและซีทำลายเซลล์ตับ อาจทำให้ตับอักเสบเรื้อรัง ตับแข็ง และมะเร็งตับ"}
-];
-var MAX_BOSS_HP=1190,MAX_PLAYER_HP=100,DAMAGE=170,PENALTY=20,BOSS_TIME=25,LS_KEY="stiDetectiveFinalDesktopV1";
-var state,boardReturn="start",timerId=null,memoryBoard=[];
-function fresh(){return{name:"PLAYER",score:0,di:0,clues:1,dlocked:false,dCorrect:0,inventory:{BACTERIA:0,VIRUS:0,PROTECTION:0,BODY:0},bi:0,bossHP:MAX_BOSS_HP,playerHP:MAX_PLAYER_HP,bCorrect:0,blocked:false,timer:BOSS_TIME,shield:false,status:"IN PROGRESS"}}
-state=fresh();
-function el(id){return document.getElementById(id)}
-function show(id){var a=document.querySelectorAll(".screen");for(var i=0;i<a.length;i++)a[i].classList.remove("active");el(id).classList.add("active");window.scrollTo(0,0)}
-function toast(msg){var t=el("toast");t.textContent=msg;t.classList.add("show");clearTimeout(toast.t);toast.t=setTimeout(function(){t.classList.remove("show")},1400)}
-function full(){if(!document.fullscreenElement&&document.documentElement.requestFullscreen)document.documentElement.requestFullscreen();else if(document.exitFullscreen)document.exitFullscreen()}
-function progress(n){el("progressText").textContent=n+"/15";el("progressBar").style.width=((n-1)/14*100)+"%"}
-function evLabel(k){return{BACTERIA:"🦠 BACTERIA",VIRUS:"🧬 VIRUS",PROTECTION:"🛡️ PROTECTION",BODY:"🫀 BODY"}[k]||k}
-function renderInventory(id){var root=el(id),keys=["BACTERIA","VIRUS","PROTECTION","BODY"],any=false;root.innerHTML="";keys.forEach(function(k){if(state.inventory[k]>0){any=true;var s=document.createElement("span");s.className="token";s.textContent=evLabel(k)+" ×"+state.inventory[k];root.appendChild(s)}});if(!any){var z=document.createElement("span");z.className="small";z.textContent="ยังไม่มี Evidence";root.appendChild(z)}}
-function renderOptions(id,items,handler){var root=el(id);root.innerHTML="";items.forEach(function(txt,i){var b=document.createElement("button");b.type="button";b.className="option";b.textContent=String.fromCharCode(65+i)+". "+txt;b.addEventListener("click",function(){handler(i,b)});root.appendChild(b)})}
-function startGame(){state=fresh();state.name=el("playerName").value.trim()||"PLAYER";show("detective");renderDetective()}
-function renderDetective(){state.dlocked=false;state.clues=1;var q=detectiveCases[state.di];progress(state.di+1);el("score").textContent=state.score;el("caseNo").textContent=state.di+1;el("clueNo").textContent=state.clues;el("caseCode").textContent="CASE #"+(state.di+1<10?"0":"")+(state.di+1);el("caseCategory").textContent=q.category;el("caseIcon").textContent=q.icon;el("caseTitle").textContent=q.title;el("casePrompt").textContent=q.prompt;renderClues();renderOptions("caseOptions",q.options,answerDetective);el("clueBtn").hidden=false;el("clueBtn").disabled=false;el("nextCaseBtn").hidden=true;el("caseFeedback").className="feedback";el("caseFeedback").textContent="";renderInventory("inventory")}
-function renderClues(){var root=el("clues"),q=detectiveCases[state.di];root.innerHTML="";q.clues.forEach(function(c,i){var d=document.createElement("div");d.className="clue"+(i<state.clues?"":" locked");d.textContent=(i<state.clues?"CLUE "+(i+1)+": ":"LOCKED: ")+c;root.appendChild(d)});el("clueNo").textContent=state.clues}
-function revealClue(){if(state.dlocked)return;if(state.clues<3){state.clues++;renderClues()}if(state.clues>=3)el("clueBtn").disabled=true}
-function answerDetective(i){if(state.dlocked)return;state.dlocked=true;var q=detectiveCases[state.di],bs=el("caseOptions").querySelectorAll(".option"),x;for(x=0;x<bs.length;x++){bs[x].disabled=true;if(x===q.answer)bs[x].classList.add("correct");if(x===i&&x!==q.answer)bs[x].classList.add("wrong")}var fb=el("caseFeedback");if(i===q.answer){var pts=state.clues===1?120:state.clues===2?90:60;state.score+=pts;state.dCorrect++;state.inventory[q.evidence]++;fb.className="feedback show good";fb.innerHTML="✅ CORRECT! +"+pts+" POINTS<br>"+q.explain+"<br>🧩 "+evLabel(q.evidence)}else{fb.className="feedback show bad";fb.innerHTML="❌ INCORRECT<br>"+q.explain}el("score").textContent=state.score;el("clueBtn").hidden=true;el("nextCaseBtn").hidden=false;renderInventory("inventory")}
-function nextCase(){if(!state.dlocked)return;if(state.di<detectiveCases.length-1){state.di++;renderDetective()}else{renderInventory("introInventory");show("bossIntro")}}
-function enterBoss(){show("boss");setupPowers();renderBoss()}
-function setupPowers(){var root=el("powerups");root.innerHTML="";[["BACTERIA","🔍 ANALYZE","ตัดตัวเลือกผิด 1 ข้อ"],["VIRUS","✂️ 50/50","ตัดตัวเลือกผิด 2 ข้อ"],["PROTECTION","🛡️ SHIELD","กันความเสียหาย 1 ครั้ง"],["BODY","⏰ TIME BOOST","เพิ่มเวลา +10 วินาที"]].forEach(function(d){var b=document.createElement("button");b.type="button";b.className="power";b.id="power-"+d[0];b.dataset.desc=d[2];b.addEventListener("click",function(){usePower(d[0])});root.appendChild(b)});refreshPowers()}
-function refreshPowers(){var labels={BACTERIA:"🔍 ANALYZE",VIRUS:"✂️ 50/50",PROTECTION:"🛡️ SHIELD",BODY:"⏰ TIME BOOST"};Object.keys(labels).forEach(function(k){var b=el("power-"+k);if(!b)return;b.innerHTML=labels[k]+" ×"+state.inventory[k]+"<br><small>"+b.dataset.desc+"</small>";b.disabled=state.inventory[k]<=0||state.blocked;b.classList.toggle("active",k==="PROTECTION"&&state.shield)})}
-function removeWrong(count){var q=bossQuestions[state.bi],bs=el("bossOptions").querySelectorAll(".option"),removed=0,i;for(i=0;i<bs.length&&removed<count;i++){if(i!==q.answer&&!bs[i].disabled){bs[i].disabled=true;bs[i].style.opacity=".23";removed++}}return removed}
-function usePower(k){if(state.blocked||state.inventory[k]<=0)return;if(k==="BACTERIA"){if(!removeWrong(1)){toast("ใช้ไม่ได้ในตอนนี้");return}}else if(k==="VIRUS"){if(!removeWrong(2)){toast("ใช้ไม่ได้ในตอนนี้");return}}else if(k==="PROTECTION"){if(state.shield){toast("SHIELD เปิดอยู่แล้ว");return}state.shield=true}else if(k==="BODY"){state.timer+=10;el("timer").textContent=state.timer}state.inventory[k]--;refreshPowers()}
-function renderBoss(){stopTimer();state.blocked=false;var q=bossQuestions[state.bi],global=9+state.bi;progress(global);el("bossQNo").textContent=global;el("bossCategory").textContent=q.category;el("bossQuestion").textContent=q.q;el("battleLog").innerHTML="";renderOptions("bossOptions",q.options,answerBoss);el("nextBossBtn").hidden=true;state.timer=BOSS_TIME;el("timer").textContent=state.timer;el("timer").classList.remove("danger");updateBars();refreshPowers();startTimer()}
-function startTimer(){stopTimer();timerId=setInterval(function(){state.timer--;el("timer").textContent=state.timer;el("timer").classList.toggle("danger",state.timer<=7);if(state.timer<=0){stopTimer();bossTimeout()}},1000)}
-function stopTimer(){if(timerId){clearInterval(timerId);timerId=null}}
-function markBoss(chosen){var q=bossQuestions[state.bi],bs=el("bossOptions").querySelectorAll(".option"),i;for(i=0;i<bs.length;i++){bs[i].disabled=true;if(i===q.answer)bs[i].classList.add("correct");if(chosen!==null&&i===chosen&&i!==q.answer)bs[i].classList.add("wrong")}}
-function answerBoss(i){if(state.blocked)return;state.blocked=true;stopTimer();var q=bossQuestions[state.bi];markBoss(i);if(i===q.answer){state.bossHP=Math.max(0,state.bossHP-DAMAGE);state.bCorrect++;var bonus=Math.max(0,state.timer*2);state.score+=100+bonus;el("battleLog").innerHTML="💥 CORRECT! Boss -"+DAMAGE+" HP<br>"+q.explain+"<br>⭐ +"+(100+bonus);el("bossEmoji").classList.add("hit");setTimeout(function(){el("bossEmoji").classList.remove("hit")},220)}else penalty("❌ INCORRECT<br>"+q.explain);finishTurn()}
-function bossTimeout(){if(state.blocked)return;state.blocked=true;var q=bossQuestions[state.bi];markBoss(null);penalty("⏰ TIME OUT!<br>"+q.explain);finishTurn()}
-function penalty(msg){if(state.shield){state.shield=false;el("battleLog").innerHTML="🛡️ SHIELD BLOCKED DAMAGE!<br>"+msg}else{state.playerHP=Math.max(0,state.playerHP-PENALTY);el("battleLog").innerHTML=msg+"<br>❤️ TEAM -"+PENALTY+" HP"}}
-function finishTurn(){updateBars();refreshPowers();if(state.playerHP<=0){state.status="KO";el("nextBossBtn").hidden=true;el("battleLog").innerHTML+='<br><span class="ko">💀 TEAM HP = 0 — GAME OVER</span>';stopTimer();setTimeout(endGame,450);return}el("nextBossBtn").hidden=false}
-function updateBars(){el("bossHp").style.width=(state.bossHP/MAX_BOSS_HP*100)+"%";el("bossHpText").textContent=state.bossHP+"/"+MAX_BOSS_HP;el("playerHp").style.width=(state.playerHP/MAX_PLAYER_HP*100)+"%";el("playerHpText").textContent=state.playerHP+"/"+MAX_PLAYER_HP}
-function nextBoss(){if(!state.blocked)return;if(state.bi>=bossQuestions.length-1){endGame();return}state.bi++;renderBoss()}
-function result(){return{name:state.name,score:Math.round(state.score),d:state.dCorrect,b:state.bCorrect,hp:state.playerHP,status:state.status,ts:Date.now()}}
-function loadBoard(){try{var a=JSON.parse(localStorage.getItem(LS_KEY)||"[]");if(Array.isArray(a)){memoryBoard=a.slice();return a}}catch(e){}return memoryBoard.slice()}
-function saveBoard(a){memoryBoard=a.slice();try{localStorage.setItem(LS_KEY,JSON.stringify(a))}catch(e){}}
-function saveResult(r){var a=loadBoard();a.push(r);saveBoard(a)}
-function sortBoard(a){return a.sort(function(x,y){return(y.score-x.score)||((y.d+y.b)-(x.d+x.b))||(y.hp-x.hp)||x.name.localeCompare(y.name)})}
-function endGame(){stopTimer();if(state.playerHP<=0)state.status="KO";else if(state.bossHP<=0)state.status="WIN";else state.status="END";show("end");el("finalScore").textContent=state.score;el("dSummary").textContent=state.dCorrect+"/8";el("bSummary").textContent=state.bCorrect+"/7";el("hpSummary").textContent=state.playerHP+"/100";if(state.status==="WIN"){el("endIcon").textContent="🏆";el("endTitle").textContent="BOSS DEFEATED!";el("endText").textContent=state.name+" ตอบคำถามได้ครบและกำจัด Final Boss สำเร็จ"}else if(state.status==="KO"){el("endIcon").textContent="💥";el("endTitle").textContent="MISSION FAILED";el("endText").textContent="Team HP เหลือ 0 — แพ้ทันที"}else{el("endIcon").textContent="🧪";el("endTitle").textContent="MISSION ENDED";el("endText").textContent="จบคำถามทั้ง 15 ข้อ — Boss เหลือ "+state.bossHP+" HP"}saveResult(result())}
-function openBoard(){var active=document.querySelector(".screen.active");boardReturn=active?active.id:"start";if(boardReturn==="boss"&&!state.blocked)stopTimer();renderBoard();show("leaderboard")}
-function closeBoard(){show(boardReturn||"start");if(boardReturn==="boss"&&!state.blocked&&state.playerHP>0)startTimer()}
-function renderBoard(){var a=sortBoard(loadBoard()),body=el("leaderboardBody");body.innerHTML="";el("playerCount").textContent=a.length;el("emptyBoard").style.display=a.length?"none":"block";a.forEach(function(r,i){var tr=document.createElement("tr");if(i<3)tr.className="rank-"+(i+1);var vals=[i===0?"🥇":i===1?"🥈":i===2?"🥉":String(i+1),r.name,r.score,r.d+"/8",r.b+"/7",r.hp,r.status==="WIN"?"🏆 WIN":r.status==="KO"?"💀 KO":"🧪 END"];vals.forEach(function(v){var td=document.createElement("td");td.textContent=v;tr.appendChild(td)});body.appendChild(tr)})}
-function clearBoard(){if(confirm("ล้างคะแนนทั้งหมดใน Leaderboard หรือไม่?")){try{localStorage.removeItem(LS_KEY)}catch(e){}renderBoard()}}
-function playAgain(){state=fresh();el("playerName").value="";show("start")}
-function bind(){el("startBtn").addEventListener("click",startGame);el("clueBtn").addEventListener("click",revealClue);el("nextCaseBtn").addEventListener("click",nextCase);el("enterBossBtn").addEventListener("click",enterBoss);el("nextBossBtn").addEventListener("click",nextBoss);el("playAgainBtn").addEventListener("click",playAgain);el("closeBoardBtn").addEventListener("click",closeBoard);el("clearBoardBtn").addEventListener("click",clearBoard);var b=document.querySelectorAll(".js-board"),f=document.querySelectorAll(".js-full"),i;for(i=0;i<b.length;i++)b[i].addEventListener("click",openBoard);for(i=0;i<f.length;i++)f[i].addEventListener("click",full)}
-bind();
-})();
-</script>
-</body>
-</html>
